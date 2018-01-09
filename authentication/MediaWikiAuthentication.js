@@ -94,6 +94,7 @@ MWAuthenticator.prototype = {
 			requestInfo += ' with body: ' + requestBody;
 			msg.setRequestBody(requestBody);
 		}
+		msg.getRequestHeader().setContentLength(requestBody.length);
 
 		println(requestInfo);
 		this.helper.sendAndReceive(msg);
