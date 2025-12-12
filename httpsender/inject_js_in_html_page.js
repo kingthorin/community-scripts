@@ -10,13 +10,13 @@
 
 FILE = "/tmp/test.js";
 
-function loadScriptFromFile(file) {
-  var Files = Java.type("java.nio.file.Files");
-  var Paths = Java.type("java.nio.file.Paths");
-  var String = Java.type("java.lang.String");
+var Files = Java.type("java.nio.file.Files");
+var Paths = Java.type("java.nio.file.Paths");
+var JString = Java.type("java.lang.String");
 
+function loadScriptFromFile(file) {
   var filePath = Paths.get(file);
-  return new String(Files.readAllBytes(filePath), "UTF-8");
+  return new JString(Files.readAllBytes(filePath), "UTF-8");
 }
 
 function sendingRequest(msg, initiator, helper) {}

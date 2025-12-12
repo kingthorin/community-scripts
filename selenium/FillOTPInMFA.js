@@ -4,9 +4,10 @@ You need to analyze DOM of the web app this script needs to run on and modify th
 This script assumes that the web app has fixed OTP for testing which can be stored in the variable below.
  */
 
+var By = Java.type("org.openqa.selenium.By");
+var Thread = Java.type("java.lang.Thread");
+
 function browserLaunched(utils) {
-  var By = Java.type("org.openqa.selenium.By");
-  var Thread = Java.type("java.lang.Thread");
   var url = utils.waitForURL(5000);
   var wd = utils.getWebDriver();
   var OTP = "123456";

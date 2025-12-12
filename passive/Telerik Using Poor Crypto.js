@@ -7,6 +7,8 @@
 const ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
+const Base64 = Java.type("org.apache.commons.codec.binary.Base64");
+const Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
 
 function getMetadata() {
   return ScanRuleMetadata.fromYaml(`
@@ -54,11 +56,11 @@ function scan(helper, msg, src) {
     return;
   }
 
-  if (!org.apache.commons.codec.binary.Base64.isBase64(dp)) {
+  if (!Base64.isBase64(dp)) {
     return;
   }
 
-  var dpBytes = org.apache.commons.codec.binary.Base64.decodeBase64(dp);
+  var dpBytes = Base64.decodeBase64(dp);
 
   if (dpBytes.length < 48) {
     return;
@@ -94,7 +96,7 @@ function scan(helper, msg, src) {
           var xor = ctx ^ key;
           var chr = String.fromCharCode(xor);
 
-          if (!org.apache.commons.codec.binary.Base64.isBase64(chr)) {
+          if (!Base64.isBase64(chr)) {
             keyPossibilities1[keyIdx][possibleIdx] = 0;
           }
         }
@@ -158,7 +160,7 @@ function scan(helper, msg, src) {
           ptBase64 += chr;
         }
 
-        var pt = org.apache.commons.codec.binary.Base64.decodeBase64(ptBase64);
+        var pt = Base64.decodeBase64(ptBase64);
 
         for (byteIdx = 0; byteIdx < pt.length; byteIdx++) {
           if (!(pt[byteIdx] >= 32 && pt[byteIdx] <= 127)) {
@@ -206,11 +208,11 @@ function scan(helper, msg, src) {
 
   const url = msg.getRequestHeader().getURI().toString();
   if (url.contains("DialogHandler.aspx")) {
-    alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_HIGH;
+    alertConfidence = Alert.CONFIDENCE_HIGH;
     otherInfo =
       "The URI strongly suggests this is a Telerik.Web.UI.DialogHandler instance.";
   } else {
-    alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_MEDIUM;
+    alertConfidence = Alert.CONFIDENCE_MEDIUM;
     otherInfo =
       "The URI is not typical for a Telerik.Web.UI.DialogHandler instance, so it may have been changed (e.g., in web.config), or this may be a false positive.";
   }

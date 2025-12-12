@@ -10,6 +10,7 @@ const HistoryReference = Java.type(
 const HttpSender = Java.type("org.parosproxy.paros.network.HttpSender");
 const HttpMessage = Java.type("org.parosproxy.paros.network.HttpMessage");
 const URI = Java.type("org.apache.commons.httpclient.URI");
+const ZAP = Java.type("org.zaproxy.zap.ZAP");
 const requestedSubdomains = [];
 const sender = new HttpSender(HttpSender.MANUAL_REQUEST_INITIATOR);
 
@@ -58,12 +59,12 @@ function consumer(event) {
 }
 
 function install(helper) {
-  org.zaproxy.zap.ZAP.getEventBus().registerConsumer(
+  ZAP.getEventBus().registerConsumer(
     consumer,
     "org.parosproxy.paros.model.SiteMapEventPublisher"
   );
 }
 
 function uninstall(helper) {
-  org.zaproxy.zap.ZAP.getEventBus().unregisterConsumer(consumer);
+  ZAP.getEventBus().unregisterConsumer(consumer);
 }

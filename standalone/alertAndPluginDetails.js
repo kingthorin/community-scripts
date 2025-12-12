@@ -5,20 +5,24 @@
  * It's tab separated so you can simply copy/paste it into Excel (or whatever).
  */
 
-extAlert = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME);
+var ExtensionAlert = Java.type(
+  "org.zaproxy.zap.extension.alert.ExtensionAlert"
+);
+var ExtensionPassiveScan2 = Java.type(
+  "org.zaproxy.addon.pscan.ExtensionPassiveScan2"
+);
+var Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
+var pf = Java.type("org.parosproxy.paros.core.scanner.PluginFactory");
+
+extAlert = control.getExtensionLoader().getExtension(ExtensionAlert.NAME);
 
 extPscan = control
   .getExtensionLoader()
-  .getExtension(org.zaproxy.addon.pscan.ExtensionPassiveScan2.NAME);
-
-var pf = Java.type("org.parosproxy.paros.core.scanner.PluginFactory");
+  .getExtension(ExtensionPassiveScan2.NAME);
 
 printHeaders();
 
 if (extAlert != null) {
-  var Alert = org.parosproxy.paros.core.scanner.Alert;
   var alerts = extAlert.getAllAlerts();
   for (var i = 0; i < alerts.length; i++) {
     var alert = alerts[i];

@@ -10,16 +10,16 @@
  * Every request made by this script is logged separately to the History tab.
  */
 
-function authenticate(helper, paramsValues, credentials) {
-  var AuthenticationHelper = Java.type(
-    "org.zaproxy.zap.authentication.AuthenticationHelper"
-  );
-  var HttpRequestHeader = Java.type(
-    "org.parosproxy.paros.network.HttpRequestHeader"
-  );
-  var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
-  var URI = Java.type("org.apache.commons.httpclient.URI");
+var AuthenticationHelper = Java.type(
+  "org.zaproxy.zap.authentication.AuthenticationHelper"
+);
+var HttpRequestHeader = Java.type(
+  "org.parosproxy.paros.network.HttpRequestHeader"
+);
+var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
+var URI = Java.type("org.apache.commons.httpclient.URI");
 
+function authenticate(helper, paramsValues, credentials) {
   var targetURL = paramsValues.get("Target URL");
   var baseURL = targetURL.match(/^(.+?[^\/:](?=[?\/]|$))/i)[1];
 

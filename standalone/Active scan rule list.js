@@ -1,8 +1,10 @@
 // This script gives details about all of the active scan rules installed
 
-extAscan = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.ascan.ExtensionActiveScan.NAME);
+var ExtensionActiveScan = Java.type(
+  "org.zaproxy.zap.extension.ascan.ExtensionActiveScan"
+);
+
+extAscan = control.getExtensionLoader().getExtension(ExtensionActiveScan.NAME);
 
 plugins = extAscan
   .getPolicyManager()

@@ -8,7 +8,10 @@ function logger() {
 
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
-var COOKIE_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
+var HtmlParameterType = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type"
+);
+var COOKIE_TYPE = HtmlParameterType.cookie;
 
 function sendingRequest(msg, initiator, helper) {
   var headers = msg.getRequestHeader();

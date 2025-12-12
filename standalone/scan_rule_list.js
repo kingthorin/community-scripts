@@ -1,8 +1,13 @@
 // This script gives details about all of the scan rules installed
 
-extAscan = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.ascan.ExtensionActiveScan.NAME);
+var ExtensionActiveScan = Java.type(
+  "org.zaproxy.zap.extension.ascan.ExtensionActiveScan"
+);
+var ExtensionPassiveScan2 = Java.type(
+  "org.zaproxy.addon.pscan.ExtensionPassiveScan2"
+);
+
+extAscan = control.getExtensionLoader().getExtension(ExtensionActiveScan.NAME);
 
 plugins = extAscan
   .getPolicyManager()
@@ -29,7 +34,7 @@ for (var i = 0; i < plugins.length; i++) {
 
 extPscan = control
   .getExtensionLoader()
-  .getExtension(org.zaproxy.addon.pscan.ExtensionPassiveScan2.NAME);
+  .getExtension(ExtensionPassiveScan2.NAME);
 
 plugins = extPscan.getPassiveScannersManager().getScanRules();
 

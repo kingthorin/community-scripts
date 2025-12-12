@@ -33,6 +33,9 @@ var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var System = Java.type("java.lang.System");
 var Thread = Java.type("java.lang.Thread");
 var URI = Java.type("org.apache.commons.httpclient.URI");
+var ExtensionSelenium = Java.type(
+  "org.zaproxy.zap.extension.selenium.ExtensionSelenium"
+);
 
 var extensionNetwork = control
   .getExtensionLoader()
@@ -83,7 +86,7 @@ function authenticate(helper, _paramsValues, _credentials) {
   logger("Launching browser to authenticate to Juice Shop");
   var extSel = control
     .getExtensionLoader()
-    .getExtension(org.zaproxy.zap.extension.selenium.ExtensionSelenium.class);
+    .getExtension(ExtensionSelenium.class);
 
   // Change to "firefox" (or "chrome") to see the browsers being launched
   var wd = extSel.getWebDriver(5, "firefox-headless", proxyAddress, proxyPort);
