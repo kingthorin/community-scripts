@@ -2,11 +2,13 @@
 //
 // This is a standalone script which you can run from the Script Console
 
-extAlert = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME);
+var ExtensionAlert = Java.type(
+  "org.zaproxy.zap.extension.alert.ExtensionAlert"
+);
+var Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
+
+extAlert = control.getExtensionLoader().getExtension(ExtensionAlert.NAME);
 if (extAlert != null) {
-  var Alert = org.parosproxy.paros.core.scanner.Alert;
   var alerts = extAlert.getAllAlerts();
   for (var i = 0; i < alerts.length; i++) {
     var alert = alerts[i];

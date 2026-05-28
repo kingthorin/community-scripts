@@ -3,17 +3,18 @@
 // SRC_Proxied, SRC_Manual, SRC_Other
 // The script can be run multiple times, history entries will only be tagged
 // if they don't already have a tag that starts with TAG_PREFIX as defined below.
-// Author: kingthorin
-// 20160207: Initial release
 
-extHist = control
-  .getExtensionLoader()
-  .getExtension(org.parosproxy.paros.extension.history.ExtensionHistory.NAME);
+const ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
+const ExtensionHistory = Java.type(
+  "org.parosproxy.paros.extension.history.ExtensionHistory"
+);
+
+extHist = control.getExtensionLoader().getExtension(ExtensionHistory.NAME);
 
 TAG_PREFIX = "SRC_";
 
 if (extHist != null) {
-  i = org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("tagged_ref"); // Check for global reference
+  i = ScriptVars.getGlobalVar("tagged_ref"); // Check for global reference
   if (i == null) {
     i = 1; // Global reference was null so 1
   }
@@ -48,8 +49,5 @@ if (extHist != null) {
     }
     i++;
   }
-  org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar(
-    "tagged_ref",
-    lastRef + 1
-  ); // Set global reference
+  ScriptVars.setGlobalVar("tagged_ref", lastRef + 1); // Set global reference
 }

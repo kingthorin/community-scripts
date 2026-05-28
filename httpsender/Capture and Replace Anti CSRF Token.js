@@ -9,6 +9,14 @@
 
 // REPLACE the values for the variables as applicable to your application.
 
+var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
+var HtmlParameterType = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type"
+);
+var formParamType = HtmlParameterType.form;
+var urlParamType = HtmlParameterType.url;
+var cookieParamType = HtmlParameterType.cookie;
+
 // Regular expression for the request URI that returns CSRF token in response.
 // If the application under test returns csrf token in every response or in response to more than request, set a generic regex that matches with host name or domain name of the application.
 // REPLACE the value with RegEx for your application.
@@ -27,17 +35,13 @@ var matcherGroupNumber = 1;
 // REPLACE the value with csrf token name for your application.
 var antiCsrfTokenName = "secureToken";
 
-var formParamType = org.parosproxy.paros.network.HtmlParameter.Type.form;
-var urlParamType = org.parosproxy.paros.network.HtmlParameter.Type.url;
-var cookieParamType = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
-
 // HTML parameter types to look for antiCsrfTokenName and replace with new anti CSRF Token value.
 // Comma separated list of HTML parameter types.
 // Supported values: formParamType, urlParamType, cookieParamType.
 // REPLACE the value with the params to scan for CSRF token and replace with latest vaule.
 var parameterTypesList = [formParamType, urlParamType, cookieParamType];
 
-//print ("AntiCsrfTokenValue: " + org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("anti.csrf.token.value"))
+//print("AntiCsrfTokenValue: " + ScriptVars.getGlobalVar("anti.csrf.token.value"));
 
 function sendingRequest(msg, initiator, helper) {
   // print('sendingRequest called for url=' + msg.getRequestHeader().getURI().toString())
@@ -83,7 +87,7 @@ function responseReceived(msg, initiator, helper) {
       .match(csrfTokenValueRegEx);
     if (csrfTokenValue != null && csrfTokenValue.length > matcherGroupNumber) {
       print("Latest CSRF Token value: " + csrfTokenValue[matcherGroupNumber]);
-      org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar(
+      ScriptVars.setGlobalVar(
         "anti.csrf.token.value",
         csrfTokenValue[matcherGroupNumber]
       );
@@ -98,10 +102,7 @@ function modifyParams(params) {
     // Check if the url parameters has the antiCsrfTokenName in it.
     if (param.getName().equals(antiCsrfTokenName)) {
       var secureTokenValue = param.getValue();
-      var antiCsrfTokenValue =
-        org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar(
-          "anti.csrf.token.value"
-        );
+      var antiCsrfTokenValue = ScriptVars.getGlobalVar("anti.csrf.token.value");
       // Check for the value of AntiCsrfTokenName in the existing request with the latest value captured from previous requests.
       if (
         antiCsrfTokenValue != null &&

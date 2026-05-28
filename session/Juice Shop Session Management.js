@@ -13,7 +13,10 @@
  * Obviously update with any local changes as necessary.
  */
 
-var COOKIE_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
+var HtmlParameterType = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type"
+);
+var COOKIE_TYPE = HtmlParameterType.cookie;
 var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 

@@ -3,6 +3,9 @@
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //author:@haseebeqx
 
+const StringSelection = Java.type("java.awt.datatransfer.StringSelection");
+const Toolkit = Java.type("java.awt.Toolkit");
+
 // Note: The following code lives also in Script Console add-on.
 
 function invokeWith(msg) {
@@ -30,8 +33,8 @@ function invokeWith(msg) {
   string += "'" + msg.getRequestHeader().getURI().toString() + "'";
 
   if (!suspiciousHeaders) {
-    var selected = new java.awt.datatransfer.StringSelection(string);
-    var clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+    var selected = new StringSelection(string);
+    var clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     clipboard.setContents(selected, null);
   }
   print(string);

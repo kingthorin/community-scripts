@@ -12,6 +12,8 @@
 // 20160117 - Updated to include ipv6 variants - jkbowser[at]gmail[dot]com
 
 var Locale = Java.type("java.util.Locale");
+var Integer = Java.type("java.lang.Integer");
+var InetAddress = Java.type("java.net.InetAddress");
 var ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
@@ -127,7 +129,7 @@ function decodeIP(ipChunk) {
   } else {
     //not ipv6, so process it as ipv4
 
-    var backwardIpHex = java.net.InetAddress.getByName(ipChunk);
+    var backwardIpHex = InetAddress.getByName(ipChunk);
     var backwardAddress = backwardIpHex.getHostAddress();
     var ipPieces = backwardAddress.split(".");
     var theIP =
@@ -141,7 +143,7 @@ function isLocal(ip) {
     //match on ipv6 notation
     try {
       //isSiteLocalAddress only returns true for FEC0, using RFC4193 definition of fc00, matching on beginning string regexp
-      if (java.net.InetAddress.getByName(ip) && ip.match(/(^fc00)/im)) {
+      if (InetAddress.getByName(ip) && ip.match(/(^fc00)/im)) {
         return true; //it is local per RFC4193
       }
     } catch (e) {
@@ -149,7 +151,7 @@ function isLocal(ip) {
     }
   } else {
     try {
-      if (java.net.InetAddress.getByName(ip).isSiteLocalAddress()) {
+      if (InetAddress.getByName(ip).isSiteLocalAddress()) {
         return true; //RFC1918 and IPv4
       }
     } catch (e) {
@@ -160,7 +162,7 @@ function isLocal(ip) {
 
 function isExternal(ip) {
   try {
-    if (java.net.InetAddress.getByName(ip)) {
+    if (InetAddress.getByName(ip)) {
       //just testing for valid format to verify it's not encrypted
       return true; //it is a valid IP, likely external
     }
@@ -171,12 +173,10 @@ function isExternal(ip) {
 
 function decodePort(portChunk) {
   //port processing is same for ipv4 and ipv6
-  var backwardPortHex = java.lang.Integer.toHexString(
-    java.lang.Integer.parseInt(portChunk)
-  );
+  var backwardPortHex = Integer.toHexString(Integer.parseInt(portChunk));
   var assembledPortHex =
     backwardPortHex.substring(2, 4) + backwardPortHex.substring(0, 2);
-  var thePort = java.lang.Integer.parseInt(assembledPortHex, 16);
+  var thePort = Integer.parseInt(assembledPortHex, 16);
   return thePort;
 }
 

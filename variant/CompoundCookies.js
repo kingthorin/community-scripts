@@ -10,7 +10,10 @@
  */
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
-var COOKIE_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
+var HtmlParameterType = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type"
+);
+var COOKIE_TYPE = HtmlParameterType.cookie;
 
 /* List of compound cookies to target - either burn in list below (i.e. ccList = [ "<compoundcookie1>", "<compoundcookie2>", ... ]; )
  * or set via 'CompoundCookies' global var as a '&' separated list (i.e. "<compoundcookie1>&<compoundcookie2>&..." ) */

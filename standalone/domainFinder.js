@@ -8,6 +8,7 @@
 var DOMAIN=".example.org"; //Update this with the domain you want to do lookups on 
 
 var System = Java.type("java.lang.System");
+var InetAddress = Java.type("java.net.InetAddress");
 var Thread = Java.type("java.lang.Thread");
 var TimeUnit = Java.type("java.util.concurrent.TimeUnit");
 var ForkJoinPool = Java.type("java.util.concurrent.ForkJoinPool");
@@ -62,7 +63,7 @@ function nslookup(lookupItem, type) {
   switch (type) {
     case 'rev':
       try {
-        host = java.net.InetAddress.getByName(lookupItem).getCanonicalHostName();
+        host = InetAddress.getByName(lookupItem).getCanonicalHostName();
         if (!/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(host)) {
           printHost(host);
           foundRev.push(host);
@@ -71,7 +72,7 @@ function nslookup(lookupItem, type) {
       break; 
     case 'fwd':
       try { 
-        host = java.net.InetAddress.getByName(lookupItem + DOMAIN);
+        host = InetAddress.getByName(lookupItem + DOMAIN);
         foundFwd.push(host.getHostName());
         printHost(host);
         var new_ip=host.getHostAddress();

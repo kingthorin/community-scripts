@@ -15,6 +15,9 @@ function logger() {
 }
 
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
+var ExtensionUserManagement = Java.type(
+  "org.zaproxy.zap.extension.users.ExtensionUserManagement"
+);
 
 var proxy = ScriptVars.getGlobalCustomVar("auth-proxy");
 
@@ -33,7 +36,7 @@ if (token) {
 // Reset the state for all users
 var extUser = control
   .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.users.ExtensionUserManagement.class);
+  .getExtension(ExtensionUserManagement.class);
 var session = model.getSession();
 var contexts = session.getContexts();
 for (i in contexts) {

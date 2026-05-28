@@ -5,13 +5,14 @@
 
 var By = Java.type("org.openqa.selenium.By");
 var Thread = Java.type("java.lang.Thread");
+var ExtensionSelenium = Java.type(
+  "org.zaproxy.zap.extension.selenium.ExtensionSelenium"
+);
 var juiceshop = "http://localhost:3000/";
 var username = "zap.addo.sb@gmail.com"; // Change this to an account you own
 var password = "nottherealpassword"; // Change this to the right password for your account
 
-var extSel = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.selenium.ExtensionSelenium.class);
+var extSel = control.getExtensionLoader().getExtension(ExtensionSelenium.class);
 
 var wd = extSel.getWebDriverProxyingViaZAP(1, "firefox");
 wd.get(juiceshop);

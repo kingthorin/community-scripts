@@ -5,6 +5,7 @@ var ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
 var CommonAlertTag = Java.type("org.zaproxy.addon.commonlib.CommonAlertTag");
+var HttpClientURI = Java.type("org.apache.commons.httpclient.URI");
 
 function getMetadata() {
   return ScanRuleMetadata.fromYaml(`
@@ -131,7 +132,6 @@ function testMcpEndpoint(as, originalMsg, testUrl, payload) {
     var requestHeader = testMsg.getRequestHeader();
 
     // Set the new URL using Apache Commons HttpClient URI
-    var HttpClientURI = Java.type("org.apache.commons.httpclient.URI");
     requestHeader.setURI(new HttpClientURI(testUrl, false));
     requestHeader.setMethod("POST");
 

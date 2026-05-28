@@ -19,7 +19,10 @@ function logger() {
   print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
-var COOKIE_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
+var HtmlParameterType = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type"
+);
+var COOKIE_TYPE = HtmlParameterType.cookie;
 var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var Stats = Java.type("org.zaproxy.zap.utils.Stats");
