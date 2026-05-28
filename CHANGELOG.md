@@ -17,12 +17,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Maintenance and documentation changes.
 - Active and passive READMEs to include lastest JS script examples.
 - Reduce usage of fully qualified objects in loops or main methods to address potential classloader performance issues, in JavaScript scripts (Issue 9187).
+- httpsender/AlertOnHttpResponseCodeErrors.js and AlertOnUnexpectedContentTypes.js synced from zaproxy/docker (Issue 9273), renamed to PascalCase.
 
 ### Fixed 
 - The following scripts were not being loaded as scan rules:
   - active/SSTI.js
   - passive/Mutliple Security Header Check.js
-- Updated Alert_on_HTTP_Response_Code_Errors.js to work with GraalVM JavaScript engine.
+- Updated AlertOnHttpResponseCodeErrors.js to work with GraalVM JavaScript engine.
 
 ### Removed
 - Links to videos which no longer exist.
