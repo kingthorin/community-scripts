@@ -13,6 +13,10 @@ const HistoryReference = Java.type(
   "org.parosproxy.paros.model.HistoryReference"
 );
 
+const extensionAlert = control
+  .getExtensionLoader()
+  .getExtension(ExtensionAlert.NAME);
+
 pluginid = 100000; // https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
 
 function sendingRequest(msg, initiator, helper) {
@@ -24,20 +28,20 @@ function responseReceived(msg, initiator, helper) {
     // Not of interest.
     return;
   }
-  var extensionAlert = control
-    .getExtensionLoader()
-    .getExtension(ExtensionAlert.NAME);
+
   if (extensionAlert != null) {
     var code = msg.getResponseHeader().getStatusCode();
-    if (code < 400 || code >= 600 || code == 404) {
+    if (code < 400 || code >= 600) {
       // Do nothing
     } else {
       var risk = 0; // Info
       var title = "A Client Error response code was returned by the server";
+      var alertRef = 1;
       if (code >= 500) {
         // Server error
         risk = 1; // Low
         title = "A Server Error response code was returned by the server";
+        alertRef = 2;
       }
       // CONFIDENCE_HIGH = 3 (we can be pretty sure we're right)
       var alert = new Alert(pluginid, risk, 3, title);
@@ -95,6 +99,7 @@ function responseReceived(msg, initiator, helper) {
           "Raised by the 'Alert on HTTP Response Code Error' script"
       );
       alert.setEvidence(code.toString());
+      alert.setAlertRef(pluginid + "-" + alertRef);
       alert.setCweId(388); // CWE CATEGORY: Error Handling
       alert.setWascId(20); // WASC  Improper Input Handling
       extensionAlert.alertFound(alert, ref);

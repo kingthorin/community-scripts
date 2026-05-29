@@ -13,7 +13,7 @@ const HistoryReference = Java.type(
   "org.parosproxy.paros.model.HistoryReference"
 );
 
-var extensionAlert = control
+const extensionAlert = control
   .getExtensionLoader()
   .getExtension(ExtensionAlert.NAME);
 
